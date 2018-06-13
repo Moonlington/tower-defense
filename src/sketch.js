@@ -3,7 +3,7 @@ let grid = [];
 let enemies = [];
 var mapcreator = true;
 var debug = true;
-var tower = new Tower(2, 2)
+//var tower = new Tower(2, 2)
 
 function setup() {
   colorMode(HSB, 255);
@@ -160,7 +160,7 @@ function draw() {
   rectMode(CORNER);
   fill(0, 0, 150)
   rect(0, height - Gridsize, width, Gridsize)
-  tower.show()
+  //tower.show()
 }
 
 class Gridblock {
