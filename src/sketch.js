@@ -1,9 +1,10 @@
 var Gridsize = 60;
 let grid = [];
 let enemies = [];
+let towers = [];
 var mapcreator = true;
 var debug = true;
-//var tower = new Tower(2, 2)
+towers.push(new Tower(0, 11, false, true))
 
 function setup() {
   colorMode(HSB, 255);
@@ -127,6 +128,21 @@ function mousePressed() {
       }
     }
   }
+  for (i = 0; i < towers.length; i++) {
+	if (towers[i].hover) {
+	  towers[i].locked = true;
+    } else {
+	  towers[i].locked = false;
+    }
+    towers[i].xOffset = mouseX-towers[i].gridx;
+    towers[i].yOffset = mouseY-towers[i].gridy;
+  }
+}
+
+function mouseReleased() {
+	for (i = 0; i < towers.length; i++) {
+	  towers[i].locked = false;
+	}
 }
 
 function draw() {
@@ -160,7 +176,15 @@ function draw() {
   rectMode(CORNER);
   fill(0, 0, 150)
   rect(0, height - Gridsize, width, Gridsize)
-  //tower.show()
+  for (i = 0; i < towers.length; i++) {
+    if (dist(mouseX, mouseY, towers[i].gridx, towers[i].gridy) < Gridsize * 0.75) {
+    	towers[i].hover = true;
+    } else {
+	    towers[i].hover = false;
+    }
+    towers[i].update()
+    towers[i].show()
+  }
 }
 
 class Gridblock {
