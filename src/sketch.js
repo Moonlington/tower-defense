@@ -2,9 +2,10 @@ var Gridsize = 60;
 let grid = [];
 let enemies = [];
 let towers = [];
+let bullets = [];
 var mapcreator = true;
 var debug = true;
-towers.push(new Tower(0, 11, false, true))
+towers.push(new Tower(0, 11, true))
 
 function setup() {
   colorMode(HSB, 255);
@@ -129,20 +130,29 @@ function mousePressed() {
     }
   }
   for (i = 0; i < towers.length; i++) {
-	if (towers[i].hover) {
-	  towers[i].locked = true;
+    if (towers[i].hover) {
+      if (towers[i].test) {
+        newt = new Tower(0, 11, false)
+        newt.hover = true
+        newt.locked = true
+        newt.xOffset = mouseX - newt.gridx;
+        newt.yOffset = mouseY - newt.gridy;
+        towers.push(newt)
+      } else {
+        towers[i].locked = true;
+      }
     } else {
-	  towers[i].locked = false;
+      towers[i].locked = false;
     }
-    towers[i].xOffset = mouseX-towers[i].gridx;
-    towers[i].yOffset = mouseY-towers[i].gridy;
+    towers[i].xOffset = mouseX - towers[i].gridx;
+    towers[i].yOffset = mouseY - towers[i].gridy;
   }
 }
 
 function mouseReleased() {
-	for (i = 0; i < towers.length; i++) {
-	  towers[i].locked = false;
-	}
+  for (i = 0; i < towers.length; i++) {
+    towers[i].locked = false;
+  }
 }
 
 function draw() {
@@ -178,12 +188,18 @@ function draw() {
   rect(0, height - Gridsize, width, Gridsize)
   for (i = 0; i < towers.length; i++) {
     if (dist(mouseX, mouseY, towers[i].gridx, towers[i].gridy) < Gridsize * 0.75) {
-    	towers[i].hover = true;
+      towers[i].hover = true;
     } else {
-	    towers[i].hover = false;
+      towers[i].hover = false;
     }
-    towers[i].update()
+    if (!towers[i].test) {
+      towers[i].update()
+    }
     towers[i].show()
+  }
+  for (var i = 0; i < bullets.length; i++) {
+    bullets[i].update();
+    bullets[i].show();
   }
 }
 
