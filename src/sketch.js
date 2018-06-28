@@ -186,6 +186,10 @@ function draw() {
   rectMode(CORNER);
   fill(0, 0, 150)
   rect(0, height - Gridsize, width, Gridsize)
+  for (var i = 0; i < bullets.length; i++) {
+    bullets[i].update();
+    bullets[i].show();
+  }
   for (i = 0; i < towers.length; i++) {
     if (dist(mouseX, mouseY, towers[i].gridx, towers[i].gridy) < Gridsize * 0.75) {
       towers[i].hover = true;
@@ -196,10 +200,6 @@ function draw() {
       towers[i].update()
     }
     towers[i].show()
-  }
-  for (var i = 0; i < bullets.length; i++) {
-    bullets[i].update();
-    bullets[i].show();
   }
 }
 

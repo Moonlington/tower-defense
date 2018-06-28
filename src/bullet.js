@@ -1,9 +1,11 @@
 class Bullet {
     constructor(x, y, heading) {
-        this.location = createVector(x, y);
         this.speed = 10;
         this.velocity = createVector(this.speed, 0);
         this.velocity.rotate(heading)
+        this.location = createVector(x, y);
+        this.location.add(this.velocity)
+        this.location.add(this.velocity)
     }
 
     update() {
